@@ -11,7 +11,8 @@
 |
 */
 Route::get('/', function () {
-    return view('layouts.landing');
+    $events = App\Event::all();
+    return view('layouts.landing')->with('events',$events);
 });
 Route::get('welcome', function () {
     return view('welcome');
