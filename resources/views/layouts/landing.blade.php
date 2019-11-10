@@ -87,7 +87,7 @@
   transition: 0.3s;
   display: inline-block;
   width:250px;
-  height:250px;
+  height:280px;
   overflow: hidden;
   margin-right:10px;
   margin-bottom:10px;
@@ -106,10 +106,13 @@
 #card-image{
   overflow: hidden;
 }
-#card-image img{
- height: 150px;
- width:250px;
- background-size:400px 300px;
+#card-image{
+  background-image:url('/churchill/public/assets/photos/event5.jpg');
+  height:60%;
+  width: 100%;
+  background-size:323px 179px;
+  overflow:hidden;
+  background-repeat: no-repeat;
 }
 #event-cards{
   width:80%;
@@ -186,7 +189,7 @@
     @foreach($events as $event)
     <div id="event-card">
     <div id="card-image">
-    <img src="{{ URL::to('/assets/photos/event3.jpg') }}">
+    
     </div>
     <div class="container" id="card-details">
       {{$event->eventName}}

@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 
-class EventsContoller extends Controller
+use App\Event;
+
+class EventsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,7 +26,7 @@ class EventsContoller extends Controller
      */
     public function create()
     {
-        //
+        return view('layouts.create');
     }
 
     /**

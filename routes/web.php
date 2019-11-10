@@ -17,3 +17,10 @@ Route::get('/', function () {
 Route::get('welcome', function () {
     return view('welcome');
 });
+Route::get('admin', function () {
+    $events = App\Event::all();
+    return view('layouts.admin')->with('events',$events);
+});
+Route::get('/admin/create', 'EventsController@create')->name('create');
+Route::resource('events','EventsController');
+Route::get('/admin/create',EventsController::class . '@create');
