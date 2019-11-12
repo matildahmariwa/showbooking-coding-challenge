@@ -23,4 +23,10 @@ Route::get('admin', function () {
 });
 Route::get('/admin/create', 'EventsController@create')->name('create');
 Route::resource('events','EventsController');
-Route::get('/admin/create',EventsController::class . '@create');
+Route::post('eventstore', 'EventsController@store')->name('eventstore');
+Route::post('{id}/eventupdate', 'EventsController@update')->name('eventupdate');
+Route::put('/admin/edit/{id}', 'EventsController@edit')->name('edit');
+Route::delete('/admin/{id}', 'EventsController@destroy')->name('events.delete');
+Route::get('/admin/{id}', 'EventsController@show')->name('book');
+Route::post('ticketstore/{id}', 'TicketsController@store')->name('ticketstore');
+Route::resource('tickets','TicketsController');

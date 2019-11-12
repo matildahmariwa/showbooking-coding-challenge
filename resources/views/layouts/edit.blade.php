@@ -11,40 +11,40 @@
 </head>
 <body>
     <section class="main-section">
-        <p>Create Event</p>
-    <form action="{{route("eventstore")}}" method="POST" enctype="multipart/form-data">
+        <p>Edit Event</p>
+    <form action="{{route('eventupdate',$event->id)}}" method="POST">
         @csrf 
            <div class="textbox">
                <label for="eventName">Event Name</label>
-               <input type="text" placeholder="" name="eventName">
+               <input type="text"  value="{{$event->eventName}}" name="eventName">
            </div>
            <div class="textbox">
             <label>Date</label>
-            <input type="date" placeholder="" name="eventDate">
+            <input type="date"  value="{{$event->eventDate}}" name="eventDate">
         </div> 
            <div class="textbox">
                 <label for="location">Location</label>
-                <input type="text" placeholder="" name="location">
+                <input type="text" value="{{$event->location}}" name="location">
             </div>
             <div class="textbox">
                 <label>Details</label>
-                <textarea type="text" placeholder="" name="details"></textarea>
+                <textarea type="text"  value="{{$event->details}}" name="details"></textarea>
             </div> 
             <div class="textbox">
                     <label for="Max_attendies">Maximum people</label>
-                    <input type="text" placeholder="" name="Max_attendies">
+                    <input type="text"  value="{{$event->Max_attendies}}" name="Max_attendies">
                 </div> 
                 <div class="textbox">
                         <label for="Regular Price">Regular Price</label>
-                        <input type="text" placeholder="" name="regularPrice">
+                        <input type="text" value="{{$event->regularPrice}}" name="regularPrice">
                     </div> 
                     <div class="textbox">
                             <label>VIP Price</label>
-                            <input type="text" placeholder="" name="VIP_price">
+                            <input type="text"  value="{{$event->VIP_price}}" name="VIP_price">
                         </div> 
                             <div class="textbox">
                                 <label>Cover image</label>
-                                <input type="file" name="cover_image">
+                            <input type="file" value="{{$event->cover_image}}" name="cover_image">
                             </div> 
                             
                             

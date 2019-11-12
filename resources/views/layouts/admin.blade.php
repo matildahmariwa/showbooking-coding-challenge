@@ -111,10 +111,21 @@ Churchill
             </div>
             <div class="col-md-4 col-sm-12">
                     {{$event->eventName}}
+          
             </div>
             <section class="admin-buttons">
-            <a href="#">Edit</a>
-            <a href="#">Delete</a>
+                <form method="POST" action="{{ route('edit', $event->id) }} }}">
+                    @method('PUT')
+                    @csrf
+                    <button type="submit">edit</button>
+                </form> 
+            
+            <form method="POST" action="{{ route('events.delete', $event->id) }} }}">
+                @method('DELETE')
+                @csrf
+                <button type="submit">Delete</button>
+            </form> 
+             
             </section>
         </div>
         @endforeach

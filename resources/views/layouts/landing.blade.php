@@ -193,6 +193,7 @@
     </div>
     <div class="container" id="card-details">
       {{$event->eventName}}
+      <a href="{{route('book',$event->id)}}">Reserve</a>
     </div>
     </div>
     @endforeach
