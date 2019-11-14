@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\Event;
-
+use DB;
 class TicketsController extends Controller
 {
     /**
@@ -45,10 +45,35 @@ class TicketsController extends Controller
       $ticket->regular_quantity= $request->input('regular_quantity');
       $ticket->vip_quantity= $request->input('vip_quantity');
       $ticket->event_id=$request->route('id');
-      $ticket->save();
-
-      return redirect('/');
+      $ticket->total= $request->input('regular_quantity') + $request->input('vip_quantity');
+      
+      
+      $event = Event::find($ticket->event_id);
+      if ($ticket->regular_quantity < $event->regular_attendies && $ticket->vip_quantity < $event->vip_attendies) {
+          if($event->regular_attendies>0 && $event->vip_attendies>0){
+        DB::table('events')->decrement('regular_attendies', $ticket->regular_quantity);
+        DB::table('events')->decrement('vip_attendies', $ticket->vip_quantity);
+        $ticket->save();
+        
+    };
+        Mail::send('emails.booking-enquiry', compact('request', 'user', 'data'), function($message) use ($request, $user, $data){
+            $message->from('matildamariwa3@@gmail.com');
+            $message->to($ticket->email);
+            $message->subject('Booking Enquiry');
+       
     }
+    
+      }
+   
+       else{
+          echo"no available space";
+       } 
+       return redirect('/');
+    }
+    // var_dump($ticket->regular_quantity, $event->regular_attendies, $ticket->vip_quantity, $event->vip_attendies);
+     
+      
+    
 
     /**
      * Display the specified resource.

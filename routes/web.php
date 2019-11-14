@@ -17,6 +17,9 @@ Route::get('/', function () {
 Route::get('welcome', function () {
     return view('welcome');
 });
+Route::get('confirmation', function () {
+    return view('layouts.confirmation');
+});
 Route::get('admin', function () {
     $events = App\Event::all();
     return view('layouts.admin')->with('events',$events);

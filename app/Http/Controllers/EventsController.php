@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Ticket;
 use App\Event;
 use DB;
 class EventsController extends Controller
@@ -57,11 +58,14 @@ class EventsController extends Controller
         $event->eventName= $request->input('eventName');
         $event->details= $request->input('details');
         $event->location= $request->input('location');
-        $event->Max_attendies= $request->input('Max_attendies');
-        $event->regularPrice= $request->input('regularPrice');
+        $event->vip_attendies= $request->input('vip_attendies');
+        $event->regular_attendies= $request->input('regular_attendies');
         $event->VIP_price= $request->input('VIP_price');
+        $event->regular_price= $request->input('regular_price');
         $event->eventDate= $request->input('eventDate');
         $event->cover_image=$fileNameToStore;
+
+
        
         $event->save();
         return redirect('/admin')->with('success',"Event successfully created");
@@ -78,7 +82,7 @@ class EventsController extends Controller
     public function show($id)
     {
         $event = Event::find($id);
-        return view('layouts.event')->with('event',$event);;
+        return view('layouts.event')->with('event',$event);
     }
 
     /**
@@ -124,6 +128,7 @@ class EventsController extends Controller
         $event->regularPrice= $request->input('regularPrice');
         $event->VIP_price= $request->input('VIP_price');
         $event->eventDate= $request->input('eventDate');
+
         if($request->hasFile('cover_image')){
             $event->cover_image=$fileNameToStore;
         }
@@ -143,4 +148,6 @@ class EventsController extends Controller
         $event->delete();
         return redirect('/admin')->with('success','Event deleted successfully');
     }
+
+   
 }

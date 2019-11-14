@@ -31,12 +31,16 @@
                 <textarea type="text" placeholder="" name="details"></textarea>
             </div> 
             <div class="textbox">
-                    <label for="Max_attendies">Maximum people</label>
-                    <input type="text" placeholder="" name="Max_attendies">
+                <label>VIP attendies</label>
+                <textarea type="text" placeholder="" name="vip_attendies"></textarea>
+            </div> 
+            <div class="textbox">
+                    <label>Regular attendies</label>
+                    <input type="text" placeholder="" name="regular_attendies">
                 </div> 
                 <div class="textbox">
                         <label for="Regular Price">Regular Price</label>
-                        <input type="text" placeholder="" name="regularPrice">
+                        <input type="text" placeholder="" name="regular_price">
                     </div> 
                     <div class="textbox">
                             <label>VIP Price</label>

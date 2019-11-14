@@ -13,5 +13,9 @@ class Event extends Model
      public $primarykey='id';
      //Timestamps
      public $timestamps=true;
+
+     public function tickets(){
+          return $this->hasMany(Ticket::class);
+        }
  
 }
