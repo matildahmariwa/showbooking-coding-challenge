@@ -7,7 +7,6 @@
     <title>confirmation</title>
 </head>
 <body>
-   {{$ticket->userName}} 
-   {{$ticket->userEmail}}
+  gggggg
 </body>
 </html>
