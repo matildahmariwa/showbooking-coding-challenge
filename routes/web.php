@@ -13,7 +13,7 @@
 Route::get('/', function () {
     $events = App\Event::all();
     return view('layouts.landing')->with('events',$events);
-});
+})->name('landing');
 Route::get('welcome', function () {
     return view('welcome');
 });

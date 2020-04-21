@@ -56,11 +56,17 @@
              .enter  a{
                 float:right;
                 display: inline-block;  
-                width: 150px;
+                width: 110px;
                 height: 30px;
                 background-color: teal;
                 color: white;
-                margin-right:20px;  
+                margin-right:20px;
+                padding-left:10px;
+                padding-top: 2px;
+                letter-spacing:1.5px;  
+             }
+             .enter a :hover{
+                 text-decoration: none;
              }
             #top-intro{
                 height: 36px;
@@ -79,6 +85,23 @@
             #event-image img{
                 height:20px;
                 width:50px;;
+            }
+            .btns{
+                width: 125px;
+            height: 45px;
+            /* margin-left:234px;
+            margin-top: 15px; */
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-weight:500;
+            color:white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+            outline: none;
+            background-color: teal;
             }
             
     </style>
@@ -117,13 +140,13 @@ Churchill
                 <form method="POST" action="{{ route('edit', $event->id) }} }}">
                     @method('PUT')
                     @csrf
-                    <button type="submit">edit</button>
+                    <button type="submit" class="btns" style="margin-left:20px,margin-top:100px ">edit</button>
                 </form> 
             
             <form method="POST" action="{{ route('events.delete', $event->id) }} }}">
                 @method('DELETE')
                 @csrf
-                <button type="submit">Delete</button>
+                <button type="submit"  style="margin-top:60px;" class="btns">Delete</button>
             </form> 
              
             </section>

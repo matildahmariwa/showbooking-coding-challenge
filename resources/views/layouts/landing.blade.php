@@ -93,11 +93,11 @@
   margin-bottom:10px;
   border-radius: 8px;
   margin-top:40px;
+  /* display: flex; */
   }
  
   #card-details{
-  padding: 2px 16px;
-  display: inline-block;
+  display: flex;
   
 }
 #event-card:hover {
@@ -133,6 +133,14 @@
   margin-top: 12px;
   margin-left: 530px;
   letter-spacing: 1.5px; 
+}
+#event-date{
+  flex:1;
+  background-color: aqua;
+}
+#event-details{
+  flex:3;
+  background-color: yellow;
 }
 </style>
 </head>
@@ -189,11 +197,16 @@
     @foreach($events as $event)
     <div id="event-card">
     <div id="card-image">
-    
     </div>
-    <div class="container" id="card-details">
-      {{$event->eventName}}
-      <a href="{{route('book',$event->id)}}">Reserve</a>
+    <div  id="card-details">
+      <section id="event-date">
+          {{-- $post->published_at->format('d.m.Y H:i:s'); --}}
+        {{-- {{$event->eventDate->format('Y-m-d')}} --}}
+      </section>
+      <section id="event-details"> 
+      {{$event->details}}
+      </section>
+    <a href="{{route('book',$event->id)}}">Reserve</a>
     </div>
     </div>
     @endforeach
@@ -203,9 +216,9 @@
     </div>
 </div><!--End of Div cards-->
 </div><!--end of event div-->
-<div class="footer">
+<section class="footer">
 <p class="copyright">Copyright  &#169; <?php echo date("Y"); ?><a href="#"> Matildah mariwa</a>.All rights reserved</p>
-</div><!--end of footer-->
+</section><!--end of footer-->
 </div><!--End of full-body-->
 </body>
 </html>

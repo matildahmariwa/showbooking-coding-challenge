@@ -38,52 +38,59 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-      // Create Ticket
-      $ticket=new Ticket;
-      $ticket->userName= $request->input('userName');
-      $ticket->userEmail= $request->input('userEmail');
-      $ticket->phoneNumber= $request->input('phoneNumber');
-      $ticket->regular_quantity= $request->input('regular_quantity');
-      $ticket->vip_quantity= $request->input('vip_quantity');
-      $ticket->event_id=$request->route('id');
-      $ticket->total= $request->input('regular_quantity') + $request->input('vip_quantity');
+        // Create Ticket
+        $ticket = new Ticket;
+        $ticket->userName = $request->input('userName');
+        $ticket->userEmail = $request->input('userEmail');
+        $ticket->phoneNumber = $request->input('phoneNumber');
+        $ticket->regular_quantity = $request->input('regular_quantity');
+        $ticket->vip_quantity = $request->input('vip_quantity');
+        $ticket->event_id = $request->route('id');
+        $ticket->total = $request->input('regular_quantity') + $request->input('vip_quantity');
 
-    
-      
-      $tt=DB::table('tickets')->where('userEmail','=', $ticket->userEmail)->where('event_id', '=', $ticket->event_id)->sum('total');
-       
-    
-      $event = Event::find($ticket->event_id);
-    
-      if ($ticket->regular_quantity < $event->regular_attendies && $ticket->vip_quantity < $event->vip_attendies) {
-          if($event->regular_attendies>0 && $event->vip_attendies>0){
-              if($tt>5){
-                   
-        DB::table('events')->decrement('regular_attendies', $ticket->regular_quantity);
-        DB::table('events')->decrement('vip_attendies', $ticket->vip_quantity);
-        $ticket->save();
+        $previousTickets = Db::table('tickets')
+            ->where('userEmail', '=', $ticket->userEmail)
+            ->where('event_id', '=', $ticket->event_id)
+            ->sum('total');
 
-      $to_name =  $request->input('userName');
-      $to_email = $request->input('userEmail');
-      $data = array('name'=> $to_name, "body" => "Test mail");
+        $event = Db::table('events')
+            ->where('id', '=', $ticket->event_id)
+            ->first();
+
+        $err_message = "Hi, " . $ticket->userName . " Sorry are not allowed to reserve " . ((int)$ticket->total + (int)$previousTickets) . " since it exceeds the maximum of 5 tickets allowed for both VIP and regular";
+        //Save record if there is no previous ticket reserved for user of if total tickets for user is less than 5
+        if ($previousTickets == NULL || (int)$previousTickets < 5) {
+            if ($previousTickets != NULL && (int)$ticket->total > (int)$previousTickets) {
+                echo $err_message;
+            } else {
+                if (($event->regular_attendies + $event->vip_attendies) > 0) {
+                    $ticket->save();
+                    DB::table('events')->decrement('regular_attendies', $ticket->regular_quantity);
+                    DB::table('events')->decrement('vip_attendies', $ticket->vip_quantity);
+                    $this->sendEmail($request);
+                    return redirect('/confirmation');
+                } else {
+                    echo "No more spaces available for the event" . $event->eventName;
+                }
+            }
+        } else {
+            echo $err_message;
+        }
+
+    }
+
+    private function sendEmail(Request $request)
+    {
+        $to_name =  $request->input('userName');
+        $to_email = $request->input('userEmail');
+        $data = array('name'=> $to_name, "body" => "Test mail");
 
         Mail::send('layouts.mail', $data, function($message) use ($to_name,$to_email){
-        $message->to($to_email);
-        $message->subject('Ticket success');
-        $message->from('kisilamapeni@gmail.com','kisila');
-    });
-     return redirect('/confirmation');
-     
+            $message->to($to_email);
+            $message->subject('Churchill ticket booking');
+            $message->from('kisilamapeni@gmail.com','kisila');
+        });
     }
-}
-       else{
-          echo"No available space.";
-       } 
-    
-    }
-     
-    }
-
     /**
      * Display the specified resource.
      *
