@@ -11,8 +11,26 @@
 |
 */
 Route::get('/', function () {
-    return view('layouts.landing');
-});
+    $events = App\Event::all();
+    return view('layouts.landing')->with('events',$events);
+})->name('landing');
 Route::get('welcome', function () {
     return view('welcome');
 });
+Route::get('confirmation', function () {
+    return view('layouts.confirmation');
+});
+
+Route::get('admin', function () {
+    $events = App\Event::all();
+    return view('layouts.admin')->with('events',$events);
+});
+Route::get('/admin/create', 'EventsController@create')->name('create');
+Route::resource('events','EventsController');
+Route::post('eventstore', 'EventsController@store')->name('eventstore');
+Route::post('{id}/eventupdate', 'EventsController@update')->name('eventupdate');
+Route::put('/admin/edit/{id}', 'EventsController@edit')->name('edit');
+Route::delete('/admin/{id}', 'EventsController@destroy')->name('events.delete');
+Route::get('/admin/{id}', 'EventsController@show')->name('book');
+Route::post('ticketstore/{id}', 'TicketsController@store')->name('ticketstore');
+Route::resource('tickets','TicketsController');

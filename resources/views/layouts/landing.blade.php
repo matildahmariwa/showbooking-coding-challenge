@@ -12,6 +12,9 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
 <style>
+  body{
+    background-color: #F8F9F9;
+  }
   #full-body{
     width:100% !important;
     height:100% !important;
@@ -72,9 +75,73 @@
     max-height:100vh;
     overflow: hidden;
   }
-  .item{
-    
+  #event-div p{
+    margin-left: 140px;
+    margin-top: 73px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    font-size:30px;
   }
+  #event-card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  display: inline-block;
+  width:250px;
+  height:280px;
+  overflow: hidden;
+  margin-right:10px;
+  margin-bottom:10px;
+  border-radius: 8px;
+  margin-top:40px;
+  /* display: flex; */
+  }
+ 
+  #card-details{
+  display: flex;
+  
+}
+#event-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+#card-image{
+  overflow: hidden;
+}
+#card-image{
+  background-image:url('/churchill/public/assets/photos/event5.jpg');
+  height:60%;
+  width: 100%;
+  background-size:323px 179px;
+  overflow:hidden;
+  background-repeat: no-repeat;
+}
+#event-cards{
+  width:80%;
+  margin-left:156px;
+}
+.footer{
+  height:40px;
+  width:100%;
+  font: 10px;
+  background-color:#01024e;
+  color: #F8F9F9;
+  position: relative;
+  margin-top:30px;
+}
+.footer p{
+  text-align: center;
+  position: absolute;
+  margin-top: 12px;
+  margin-left: 530px;
+  letter-spacing: 1.5px; 
+}
+#event-date{
+  flex:1;
+  background-color: aqua;
+}
+#event-details{
+  flex:3;
+  background-color: yellow;
+}
 </style>
 </head>
 <body>
@@ -124,8 +191,34 @@
               </div>       
 </div><!--End of welcome--> 
 <div id="event-div">
-
+<p>Upcoming Events</p>
+<div id="event-cards">
+    @if(count($events)>0)
+    @foreach($events as $event)
+    <div id="event-card">
+    <div id="card-image">
+    </div>
+    <div  id="card-details">
+      <section id="event-date">
+          {{-- $post->published_at->format('d.m.Y H:i:s'); --}}
+        {{-- {{$event->eventDate->format('Y-m-d')}} --}}
+      </section>
+      <section id="event-details"> 
+      {{$event->details}}
+      </section>
+    <a href="{{route('book',$event->id)}}">Reserve</a>
+    </div>
+    </div>
+    @endforeach
+    @else
+    <p>There are no events available now</p>
+    @endif
+    </div>
+</div><!--End of Div cards-->
 </div><!--end of event div-->
+<section class="footer">
+<p class="copyright">Copyright  &#169; <?php echo date("Y"); ?><a href="#"> Matildah mariwa</a>.All rights reserved</p>
+</section><!--end of footer-->
 </div><!--End of full-body-->
 </body>
 </html>
