@@ -116,7 +116,7 @@
 }
 #event-cards{
   width:80%;
-  margin-left:156px;
+  margin-left:155px;
 }
 .footer{
   height:40px;
